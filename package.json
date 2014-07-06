@@ -1,0 +1,47 @@
+{
+  "name": "zetam-client",
+  "description": "Zetam client side library for browserify",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">0.10.1"
+  },
+  "author": {
+    "name": "Marcelo Zapaia"
+  },
+  "main": "./index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qzapaia/zetam.git"
+  },
+  "keywords": [
+    "express",
+    "web",
+    "zeta"
+  ],
+  "dependencies": {
+    "async": ">=0.9.0",
+    "cheerio": ">=0.16.0",
+    "html-minifier": "^0.6.3",
+    "mustache": ">=0.8.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.5",
+    "gulp-browserify": "^0.5.0",
+    "gulp-less": "^1.2.4",
+    "gulp-livereload": "^2.1.0",
+    "gulp-load-plugins": "^0.5.3",
+    "gulp-nodemon": "^1.0.4",
+    "gulp-plumber": "^0.6.3",
+    "gulp-rename": "^1.2.0"
+  },
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/qzapaia/zetam/issues"
+  },
+  "readme": "##In progress##\nzetam\n=====\n\nMLCC (Model-Layout-Component-Controller) framework for express\n\n Docs\n\n [https://github.com/qzapaia/zetam#zetam]",
+  "_id": "zetam@0.0.1",
+  "dist": {
+    "shasum": "c56eb2db1a91358537d1d068bf702c3800efca32"
+  },
+  "_from": "."
+}
