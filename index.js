@@ -1,4 +1,3 @@
-
 require('./polyfills');
 
 var reqwest = require('reqwest');
@@ -57,6 +56,16 @@ z.Component.prototype = {
               cb(template);
             }
         })
+    },
+    bindEvent:function(selector,eventName,methodName){
+        var that = this;
+        var nodes = this.findAll(selector);
+        for (var i = 0; i < nodes.length; i++) {
+            nodes[i].addEventListener(eventName,function(e){
+                that[methodName].call(that,e,this);
+            });
+        };
+        return true;
     },
     controller:function(methodName,config,cb){
         if(typeof config == 'function'){
