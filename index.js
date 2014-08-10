@@ -5,8 +5,14 @@ var z = {};
 
 z.components = Object.create({
     _all:[],
-    getByName:function(){
-        
+    getByName:function(name){
+        var instances = [];
+        for (var i = 0; i < this._all.length; i++) {
+            if(this._all[i].name == name){
+                instances.push(this._all[i]);
+            }
+        };
+        return instances;
     }
 });
 
@@ -24,6 +30,14 @@ z.utils = {
         }
 
         return subPrototype;
+    },
+    forEach:function(collection,cb){
+        for (var i = 0; i < collection.length; i++) {
+            cb(collection[i]);
+        };
+    },
+    trim:function(text){
+        return text.replace(/^\s+|\s+$/gm, '');
     }
 }
 z.Component = function(config) {
@@ -82,6 +96,25 @@ z.Component.prototype = {
             }
         })
     },
+    on: function(channel, callback) {
+            if (!this.channels) this.channels = [];
+            if (!this.channels[channel]) this.channels[channel] = [];
+            this.channels[channel].push({
+                callback: callback
+            });
+            return this;
+    },
+    publish: function(channel) {
+        var that = this;
+        if(!this.channels || !this.channels[channel]) return false;
+        var args = Array.prototype.slice.call(arguments, 1)
+
+        z.utils.forEach(this.channels[channel],function(item) {
+            item.callback.apply(that, args);
+        })
+
+        return this;
+    },
     onPullTemplate:function(){}
 }
 z.Component.extend = z.utils.extend;
@@ -97,6 +130,7 @@ z.initDomComponents = function() {
         var componentName = domComponents[i].getAttribute('data-component');
         if (componentName in z.components) {
             var newComponent = new z.components[componentName]({
+                name: componentName,
                 el: domComponents[i],
                 id: domComponents[i].getAttribute('id')
             });
