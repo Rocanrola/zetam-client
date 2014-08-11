@@ -3,7 +3,10 @@ require('./polyfills');
 var reqwest = require('reqwest');
 var z = {};
 
-z.components = Object.create({
+z.utils = require('./utils');
+z.forms = require('./forms');
+
+z.components = {
     _all:[],
     getByName:function(name){
         var instances = [];
@@ -14,32 +17,9 @@ z.components = Object.create({
         };
         return instances;
     }
-});
+};
 
-z.utils = {
-    extend: function(child) {
-        var superPrototype = this;
-
-        var subPrototype = function(){
-            superPrototype.apply(this,arguments);
-        };
-        subPrototype.prototype = Object.create(superPrototype.prototype);
-
-        for (var p in child) {
-            subPrototype.prototype[p] = child[p];
-        }
-
-        return subPrototype;
-    },
-    forEach:function(collection,cb){
-        for (var i = 0; i < collection.length; i++) {
-            cb(collection[i]);
-        };
-    },
-    trim:function(text){
-        return text.replace(/^\s+|\s+$/gm, '');
-    }
-}
+ 
 z.Component = function(config) {
     z.components._all.push(this);
     config = config || {};
@@ -73,7 +53,14 @@ z.Component.prototype = {
     },
     bindEvent:function(selector,eventName,methodName){
         var that = this;
-        var nodes = this.findAll(selector);
+        var nodes;
+
+        if(typeof selector === 'string'){
+            nodes = this.findAll(selector);
+        }else{
+            nodes = (selector instanceof window.Element) ? [selector] : selector;
+        }
+        
         for (var i = 0; i < nodes.length; i++) {
             nodes[i].addEventListener(eventName,function(e){
                 that[methodName].call(that,e,this);
@@ -90,9 +77,11 @@ z.Component.prototype = {
         reqwest({
             url: 'components/'+this.name+'/method/'+methodName, 
             data: config,
-            method: 'get', 
-            success: function (response) {
-              try { var r = JSON.parse(response); cb(r) }catch(e){ cb(response) };
+            method: 'get',
+            type: 'json',
+            success: function (res) {
+                cb(res.err,res.res)
+              // try { var r = JSON.parse(response); cb(r.err,r.res) }catch(e){ cb(response) };
             }
         })
     },
