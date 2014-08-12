@@ -11,5 +11,5 @@ git add .
 git commit -am "$MSSG"
 git push origin HEAD
 
-# npm version patch
-# npm publish
+npm version patch
+npm publish
