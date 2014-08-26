@@ -75,7 +75,7 @@ z.Component.prototype = {
         }
         
         reqwest({
-            url: 'components/'+this.name+'/method/'+methodName, 
+            url: '/components/'+this.name+'/method/'+methodName, 
             data: config,
             method: 'get',
             type: 'json',
