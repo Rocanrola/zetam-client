@@ -5,6 +5,7 @@ var z = {};
 
 z.utils = require('./utils');
 z.forms = require('./forms');
+z.reqwest = reqwest;
 
 z.components = {
     _all:[],
