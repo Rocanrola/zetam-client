@@ -71,7 +71,7 @@ module.exports = {
                 }
             },
             lengths: function(node) {
-                if (node.getAttribute('required') != null && node.getAttribute('minlength') != null &&
+                if (node.value.length > 0 && node.getAttribute('minlength') != null &&
                     node.getAttribute('maxlength') != null) {
 
                     var minlength = parseInt(node.getAttribute('minlength'));
